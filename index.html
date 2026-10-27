@@ -3,301 +3,695 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sri Guru Achuth weds Tejaswini - Wedding Invitation</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Sri Guru Achuth & Tejaswini - Wedding Invitation | Tirupati</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        maroon: {
+                            DEFAULT: '#6B1426',
+                            dark: '#3E0A15',
+                            light: '#8E1B33',
+                            deep: '#25040B'
+                        },
+                        gold: {
+                            DEFAULT: '#D4AF37',
+                            light: '#F3E5AB',
+                            dark: '#AA7C11',
+                            shimmer: '#FFD700'
+                        },
+                        cream: {
+                            DEFAULT: '#FFFDF9',
+                            soft: '#FAF5EE',
+                            warm: '#F3ECE0'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        script: ['Great Vibes', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #fffaf0;
-            color: #2c2c2c;
-            overflow-x: hidden;
+        html {
+            scroll-behavior: smooth;
         }
-        .font-cinzel {
-            font-family: 'Cinzel', serif;
+        /* Royal Background Pattern */
+        .bg-royal-pattern {
+            background-color: #FAF5EE;
+            background-image: radial-gradient(#D4AF37 0.7px, transparent 0.7px), radial-gradient(#D4AF37 0.7px, #FAF5EE 0.7px);
+            background-size: 28px 28px;
+            background-position: 0 0, 14px 14px;
         }
-        .font-vibes {
-            font-family: 'Great Vibes', cursive;
+        .gold-frame {
+            border: 2px solid #D4AF37;
+            position: relative;
         }
-        .bg-maroon {
-            background-color: #6a1b29;
-        }
-        .text-maroon {
-            color: #6a1b29;
-        }
-        .border-maroon {
-            border-color: #6a1b29;
-        }
-        .bg-gold {
-            background-color: #d4af37;
-        }
-        .text-gold {
-            color: #d4af37;
-        }
-        .border-gold {
-            border-color: #d4af37;
-        }
-        /* Floating Petal Animation */
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(105vh) rotate(360deg); opacity: 0.2; }
-        }
-        .petal {
-            position: fixed;
-            top: -10vh;
-            background: radial-gradient(circle, #ffccd5 0%, #ff8fa3 100%);
-            border-radius: 150% 0 150% 0;
-            animation: fall linear infinite;
-            z-index: 40;
+        .gold-frame::after {
+            content: '';
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px solid rgba(212, 175, 55, 0.45);
             pointer-events: none;
+        }
+        .gold-text-gradient {
+            background: linear-gradient(135deg, #B8860B 0%, #FFD700 35%, #D4AF37 70%, #996515 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-bg-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #AA7C11 100%);
+        }
+        .maroon-bg-gradient {
+            background: linear-gradient(135deg, #6B1426 0%, #3E0A15 100%);
+        }
+        .glass-card-maroon {
+            background: rgba(107, 20, 38, 0.92);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.45);
+        }
+        .glass-card-cream {
+            background: rgba(255, 253, 249, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+        }
+        /* Pulsing Gold Glow */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6)); }
+            50% { opacity: 0.85; filter: drop-shadow(0 0 22px rgba(255, 215, 0, 0.95)); }
+        }
+        .animate-glow {
+            animation: pulseGlow 3.5s ease-in-out infinite;
+        }
+        /* Floating Petals Canvas */
+        #petalCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        /* Toast Popup Animation */
+        .toast-enter {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        .toast-show {
+            transform: translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
-<body class="relative">
-
-    <!-- Background Music Audio Element linking Drive MP3 -->
-    <audio id="weddingMusic" loop preload="auto">
-        <source src="wedding-music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <!-- Floating Audio Control Widget -->
-    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-white/90 backdrop-blur-md px-4 py-3 rounded-full shadow-2xl border border-gold/50">
-        <button id="musicToggleBtn" onclick="toggleMusic()" class="w-10 h-10 rounded-full bg-maroon text-gold flex items-center justify-center shadow-lg hover:scale-105 transition-transform duration-300 focus:outline-none">
-            <svg id="musicIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-            </svg>
+<body class="font-sans bg-royal-pattern text-gray-800 antialiased overflow-x-hidden selection:bg-gold selection:text-maroon-dark">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-40 glass-card-maroon shadow-xl transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 py-3.5 flex justify-between items-center">
+            <a href="#hero" class="font-script text-2xl sm:text-3xl font-bold gold-text-gradient">Achuth & Tejaswini</a>
+            <div class="flex space-x-4 sm:space-x-8 text-xs font-cinzel font-semibold uppercase tracking-widest text-gold-light">
+                <a href="#couple" class="hover:text-gold transition">The Couple</a>
+                <a href="#blessings" class="hover:text-gold transition">Family Blessings</a>
+                <a href="#events" class="hover:text-gold transition font-bold text-gold">Events</a>
+                <a href="#wishes" class="hover:text-gold transition">Wishes</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero Header Section -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 maroon-bg-gradient text-white overflow-hidden">
+        <!-- Floating Rose Petals Canvas Overlay -->
+        <canvas id="petalCanvas"></canvas>
+        <!-- Traditional Ornamental Corner Motifs -->
+        <div class="absolute top-16 left-4 text-gold opacity-50 text-4xl sm:text-6xl"><i class="fas fa-spa"></i></div>
+        <div class="absolute top-16 right-4 text-gold opacity-50 text-4xl sm:text-6xl scale-x-[-1]"><i class="fas fa-spa"></i></div>
+        <div class="absolute bottom-6 left-4 text-gold opacity-50 text-4xl sm:text-6xl scale-y-[-1]"><i class="fas fa-spa"></i></div>
+        <div class="absolute bottom-6 right-4 text-gold opacity-50 text-4xl sm:text-6xl rotate-180"><i class="fas fa-spa"></i></div>
+        <div class="max-w-4xl text-center z-10 my-auto px-4">
+            <!-- Divine Invocation -->
+            <div class="mb-4">
+                <span class="font-cinzel text-xs md:text-sm text-gold tracking-widest uppercase font-semibold">|| Shree Ganeshaya Namah ||</span>
+            </div>
+            <span class="font-script text-3xl md:text-5xl text-gold-light block mb-2">Together with their families</span>
+            <h1 class="font-cinzel text-4xl sm:text-6xl md:text-7xl font-extrabold my-3 gold-text-gradient tracking-wide leading-tight animate-glow">
+                Sri Guru Achuth
+            </h1>
+            <div class="font-script text-4xl sm:text-5xl text-gold my-1">&</div>
+            <h1 class="font-cinzel text-4xl sm:text-6xl md:text-7xl font-extrabold my-3 gold-text-gradient tracking-wide leading-tight animate-glow">
+                Tejaswini
+            </h1>
+            <p class="font-cinzel text-xs sm:text-base tracking-widest uppercase text-cream/90 my-6 max-w-xl mx-auto leading-relaxed">
+                Cordially solicit your gracious presence and blessings on the auspicious occasion of their wedding
+            </p>
+            <div class="inline-block gold-frame bg-maroon-dark/95 px-6 sm:px-10 py-4 rounded-2xl shadow-2xl my-2">
+                <p class="font-cinzel text-gold text-sm sm:text-base font-bold tracking-wider">
+                    <i class="far fa-calendar-check mr-2 text-gold-light"></i> 25th & 26th November 2026
+                </p>
+                <p class="font-cinzel text-gray-200 text-xs sm:text-sm mt-1.5 font-medium">
+                    <i class="fas fa-map-marker-alt text-gold mr-1.5"></i> SMSO Sabha Kalyana Mandapam, Tiruchanur, Tirupati
+                </p>
+            </div>
+            <div class="mt-8">
+                <a href="#couple" class="gold-bg-gradient text-maroon-dark font-cinzel font-bold px-8 py-3.5 rounded-full text-xs uppercase tracking-widest shadow-2xl hover:brightness-110 transition transform hover:-translate-y-0.5 inline-block">
+                    View Wedding Invitation
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Couple Portrait Showcase Section -->
+    <section id="couple" class="py-20 px-4 max-w-4xl mx-auto">
+        <div class="text-center mb-10">
+            <span class="font-script text-3xl sm:text-4xl text-gold-dark">A Union Blessed by Divines</span>
+            <h2 class="font-cinzel text-3xl md:text-4xl text-maroon font-bold uppercase tracking-wide my-2">The Bride & Groom</h2>
+            <div class="w-24 h-1 gold-bg-gradient mx-auto rounded-full"></div>
+        </div>
+        <div class="glass-card-cream p-6 sm:p-10 rounded-3xl shadow-2xl gold-frame text-center">
+            <!-- High-Resolution Couple Image Showcase with Fallback & Custom File Loader -->
+            <div class="relative max-w-md mx-auto rounded-2xl overflow-hidden shadow-2xl gold-frame group">
+                <img id="coupleImage" src="IMG_3724_2.jpeg" onerror="this.onerror=null; this.src='IMG_3724.jpeg'; this.onerror=showFallbackSVG;" alt="Sri Guru Achuth and Tejaswini" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-700 min-h-[350px] bg-maroon-dark/10">
+                <div class="absolute inset-0 bg-gradient-to-t from-maroon-dark/90 via-transparent to-transparent opacity-90 flex flex-col justify-end p-6 pointer-events-none">
+                    <h3 class="font-script text-3xl sm:text-4xl text-gold">Sri Guru Achuth & Tejaswini</h3>
+                    <p class="font-cinzel text-xs text-gold-light uppercase tracking-widest mt-1">Tirupati &bull; November 2026</p>
+                </div>
+            </div>
+            <!-- Custom Photo File Selector for Preview Context -->
+            <div class="mt-4 flex justify-center items-center gap-2">
+                <label for="imageUploadInput" class="cursor-pointer bg-white hover:bg-gold/10 text-maroon border border-gold/60 font-cinzel text-xs font-semibold px-4 py-2 rounded-full transition shadow-sm flex items-center gap-2">
+                    <i class="fas fa-camera text-gold-dark"></i>
+                    <span>Select Photo File (IMG_3724.jpeg)</span>
+                </label>
+                <input type="file" id="imageUploadInput" accept="image/*" class="hidden" onchange="loadCustomImage(event)">
+            </div>
+            <p class="font-cinzel text-sm sm:text-base text-maroon-dark italic mt-6 max-w-2xl mx-auto leading-relaxed font-medium">
+                "Two lives, two hearts, joined together in friendship, bound forever in love. As we step into our sacred journey of togetherness, your holy presence and blessings mean the world to us."
+            </p>
+        </div>
+    </section>
+    <!-- Family Blessings Section -->
+    <section id="blessings" class="py-16 px-4 max-w-5xl mx-auto">
+        <div class="text-center mb-12">
+            <span class="font-script text-3xl text-gold-dark">Family Lineage</span>
+            <h2 class="font-cinzel text-3xl md:text-4xl text-maroon font-bold uppercase tracking-wide my-2">Family Blessings</h2>
+            <div class="w-24 h-1 gold-bg-gradient mx-auto rounded-full"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Groom's Family Details -->
+            <div class="glass-card-cream p-8 rounded-3xl shadow-xl gold-frame text-center transition hover:shadow-2xl">
+                <div class="w-16 h-16 gold-bg-gradient text-maroon-dark rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-md">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <span class="font-cinzel text-xs uppercase tracking-widest text-gold-dark font-bold">Groom's Family</span>
+                <h3 class="font-cinzel text-2xl font-bold text-maroon my-2">Sri Guru Achuth</h3>
+                <div class="w-12 h-0.5 bg-gold/50 mx-auto my-4"></div>
+                <p class="font-cinzel text-xs uppercase text-gray-500 tracking-wider mb-2">Son of</p>
+                <p class="font-cinzel text-lg font-bold text-gray-800">Smt. Gadicherla Padmaja</p>
+                <p class="font-cinzel text-sm text-gold-dark font-semibold my-1">&</p>
+                <p class="font-cinzel text-lg font-bold text-gray-800">Sri Gadicherla Murali Krishna</p>
+            </div>
+            <!-- Bride's Family Details -->
+            <div class="glass-card-cream p-8 rounded-3xl shadow-xl gold-frame text-center transition hover:shadow-2xl">
+                <div class="w-16 h-16 gold-bg-gradient text-maroon-dark rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-md">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <span class="font-cinzel text-xs uppercase tracking-widest text-gold-dark font-bold">Bride's Family</span>
+                <h3 class="font-cinzel text-2xl font-bold text-maroon my-2">Tejaswini</h3>
+                <div class="w-12 h-0.5 bg-gold/50 mx-auto my-4"></div>
+                <p class="font-cinzel text-xs uppercase text-gray-500 tracking-wider mb-2">Daughter of</p>
+                <p class="font-cinzel text-lg font-bold text-gray-800">Smt. P. Manjula</p>
+                <p class="font-cinzel text-sm text-gold-dark font-semibold my-1">&</p>
+                <p class="font-cinzel text-lg font-bold text-gray-800">Sri Prakash B Patil</p>
+            </div>
+        </div>
+        <div class="text-center mt-12 max-w-2xl mx-auto italic font-cinzel text-sm text-maroon-light bg-gold/10 p-6 rounded-2xl border border-gold/40">
+            <i class="fas fa-quote-left text-gold text-2xl mb-2 block"></i>
+            "We request the pleasure of your company to share in our joy as Sri Guru Achuth and Tejaswini unite in marriage."
+        </div>
+    </section>
+    <!-- Dual Real-Time Countdown Section -->
+    <section id="countdowns" class="py-16 px-4 maroon-bg-gradient text-white">
+        <div class="max-w-6xl mx-auto text-center">
+            <span class="font-script text-3xl text-gold-light">Awaiting The Blessed Hours</span>
+            <h2 class="font-cinzel text-3xl md:text-4xl text-white font-bold uppercase tracking-wide my-2">Real-Time Countdowns</h2>
+            <div class="w-24 h-1 gold-bg-gradient mx-auto rounded-full mb-12"></div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <!-- Reception Countdown -->
+                <div class="glass-card-maroon p-6 sm:p-8 rounded-3xl border border-gold/40 shadow-2xl">
+                    <div class="flex items-center justify-center space-x-2 text-gold mb-3">
+                        <i class="fas fa-glass-cheers text-2xl"></i>
+                        <h3 class="font-cinzel text-xl font-bold uppercase tracking-wider">Grand Reception</h3>
+                    </div>
+                    <p class="font-cinzel text-xs text-gold-light uppercase tracking-widest mb-6">Nov 25, 2026 &bull; 07:30 PM Onwards</p>
+                    <div class="grid grid-cols-4 gap-2 sm:gap-4">
+                        <div class="bg-maroon-deep/80 p-3 rounded-2xl border border-gold/30">
+                            <span id="rec-days" class="block font-cinzel text-2xl sm:text-4xl font-extrabold text-gold">00</span>
+                            <span class="text-[10px] sm:text-xs font-cinzel uppercase text-gray-300">Days</span>
+                        </div>
+                        <div class="bg-maroon-deep/80 p-3 rounded-2xl border border-gold/30">
+                            <span id="rec-hours" class="block font-cinzel text-2xl sm:text-4xl font-extrabold text-gold">00</span>
+                            <span class="text-[10px] sm:text-xs font-cinzel uppercase text-gray-300">Hours</span>
+                        </div>
+                        <div class="bg-maroon-deep/80 p-3 rounded-2xl border border-gold/30">
+                            <span id="rec-mins" class="block font-cinzel text-2xl sm:text-4xl font-extrabold text-gold">00</span>
+                            <span class="text-[10px] sm:text-xs font-cinzel uppercase text-gray-300">Mins</span>
+                        </div>
+                        <div class="bg-maroon-deep/80 p-3 rounded-2xl border border-gold/30">
+                            <span id="rec-secs" class="block font-cinzel text-2xl sm:text-4xl font-extrabold text-gold">00</span>
+                            <span class="text-[10px] sm:text-xs font-cinzel uppercase text-gray-300">Secs</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sumuhurtham Countdown -->
+                <div class="glass-card-maroon p-6 sm:p-8 rounded-3xl border-2 border-gold shadow-2xl relative">
+                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 gold-bg-gradient text-maroon-dark text-[10px] font-cinzel font-bold px-4 py-1 rounded-full uppercase tracking-widest shadow">
+                        Auspicious Sumuhurtham
+                    </div>
+                    <div class="flex items-center justify-center space-x-2 text-gold mb-3 mt-2">
+                        <i class="fas fa-om text-2xl"></i>
+                        <h3 class="font-cinzel text-xl font-bold uppercase tracking-wider">Sumuhurtham</h3>
+                    </div>
+                    <p class="font-cinzel text-xs text-gold-light uppercase tracking-widest mb-6">Nov 26, 2026 &bull; 12:00 PM - 12:15 PM</p>
+                    <div class="grid grid-cols-4 gap-2 sm:gap-4">
+                        <div class="bg-maroon-deep/80 p-3 rounded-2xl border border-gold/30">
+                            <span id="muh-days" class="block font-cinzel text-2xl sm:text-4xl font-extrabold text-gold">00</span>
+                            <span class="text-[10px] sm:text-xs font-cinzel uppercase text-gray-300">Days</span>
+                        </div>
+                        <div class="bg-maroon-deep/80 p-3 rounded-2xl border border-gold/30">
+                            <span id="muh-hours" class="block font-cinzel text-2xl sm:text-4xl font-extrabold text-gold">00</span>
+                            <span class="text-[10px] sm:text-xs font-cinzel uppercase text-gray-300">Hours</span>
+                        </div>
+                        <div class="bg-maroon-deep/80 p-3 rounded-2xl border border-gold/30">
+                            <span id="muh-mins" class="block font-cinzel text-2xl sm:text-4xl font-extrabold text-gold">00</span>
+                            <span class="text-[10px] sm:text-xs font-cinzel uppercase text-gray-300">Mins</span>
+                        </div>
+                        <div class="bg-maroon-deep/80 p-3 rounded-2xl border border-gold/30">
+                            <span id="muh-secs" class="block font-cinzel text-2xl sm:text-4xl font-extrabold text-gold">00</span>
+                            <span class="text-[10px] sm:text-xs font-cinzel uppercase text-gray-300">Secs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Event Schedule & Details Section -->
+    <section id="events" class="py-20 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="font-script text-3xl text-gold-dark">Celebration Details</span>
+            <h2 class="font-cinzel text-3xl md:text-4xl text-maroon font-bold uppercase tracking-wide my-2">Wedding Schedule</h2>
+            <div class="w-24 h-1 gold-bg-gradient mx-auto rounded-full"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Grand Reception Card -->
+            <div class="glass-card-cream rounded-3xl overflow-hidden shadow-xl gold-frame flex flex-col justify-between">
+                <div>
+                    <div class="maroon-bg-gradient p-6 text-center text-white border-b-2 border-gold">
+                        <i class="fas fa-wine-glass-alt text-3xl text-gold mb-2"></i>
+                        <h3 class="font-cinzel text-2xl font-bold">Grand Reception</h3>
+                        <p class="font-cinzel text-xs text-gold uppercase tracking-widest mt-1">Dinner & Celebrations</p>
+                    </div>
+                    <div class="p-6 space-y-4 text-sm font-cinzel text-gray-700">
+                        <p class="flex items-center"><i class="far fa-calendar-alt text-gold-dark text-lg w-8"></i> <strong>Date:</strong> &nbsp;Wednesday, 25th November 2026</p>
+                        <p class="flex items-center"><i class="far fa-clock text-gold-dark text-lg w-8"></i> <strong>Time:</strong> &nbsp;7:30 PM Onwards</p>
+                        <p class="flex items-start"><i class="fas fa-map-marker-alt text-gold-dark text-lg w-8 mt-1"></i> <span><strong>Venue:</strong> &nbsp;SMSO Sabha Kalyana Mandapam, Tiruchanur, Tirupati</span></p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 space-y-3">
+                    <button onclick="generateICS('Wedding Reception - Sri Guru Achuth & Tejaswini', '2026-11-25T19:30:00', 'SMSO Sabha Kalyana Mandapam, Tiruchanur, Tirupati', 'Join us for dinner and celebratory evening of Sri Guru Achuth & Tejaswini')" class="w-full bg-white hover:bg-gold/10 text-maroon border border-gold font-cinzel font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition flex items-center justify-center">
+                        <i class="far fa-calendar-plus text-gold mr-2 text-base"></i> Add Reception to Calendar (.ics)
+                    </button>
+                    <a href="https://www.google.com/maps/search/?api=1&query=SMSO+Sabha+Kalyana+Mandapam+Tiruchanur+Tirupati" target="_blank" rel="noopener noreferrer" class="w-full gold-bg-gradient text-maroon-dark font-cinzel font-bold py-3 rounded-xl text-xs uppercase tracking-wider shadow text-center hover:brightness-110 transition flex items-center justify-center">
+                        <i class="fas fa-directions mr-2"></i> Google Maps Directions
+                    </a>
+                </div>
+            </div>
+            <!-- Sumuhurtham Card -->
+            <div class="glass-card-cream rounded-3xl overflow-hidden shadow-2xl gold-frame border-2 border-gold flex flex-col justify-between relative">
+                <div class="absolute top-0 right-0 gold-bg-gradient text-maroon-dark font-cinzel font-bold text-[10px] px-4 py-1 rounded-bl-xl uppercase tracking-widest">
+                    Main Ceremony
+                </div>
+                <div>
+                    <div class="maroon-bg-gradient p-6 text-center text-white border-b-2 border-gold">
+                        <i class="fas fa-om text-3xl text-gold mb-2"></i>
+                        <h3 class="font-cinzel text-2xl font-bold">Sumuhurtham</h3>
+                        <div class="inline-block bg-gold/20 border border-gold/50 px-3 py-0.5 rounded-full mt-2">
+                            <span class="font-cinzel text-xs text-gold-light uppercase font-bold tracking-wider">In Abhijit Lagnam</span>
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-4 text-sm font-cinzel text-gray-700">
+                        <p class="flex items-center"><i class="far fa-calendar-alt text-gold-dark text-lg w-8"></i> <strong>Date:</strong> &nbsp;Thursday, 26th November 2026</p>
+                        <p class="flex items-center"><i class="far fa-clock text-gold-dark text-lg w-8"></i> <strong>Muhurtham Time:</strong> &nbsp;12:00 PM – 12:15 PM</p>
+                        <p class="flex items-start"><i class="fas fa-map-marker-alt text-gold-dark text-lg w-8 mt-1"></i> <span><strong>Venue:</strong> &nbsp;SMSO Sabha Kalyana Mandapam, Tiruchanur, Tirupati</span></p>
+                        <div class="p-3 bg-gold/10 rounded-xl border border-gold/30 text-xs italic text-maroon-dark mt-2">
+                            <i class="fas fa-info-circle mr-1"></i> Abhijit Lagnam is regarded as an auspicious celestial muhurtham for eternal prosperities.
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 space-y-3">
+                    <button onclick="generateICS('Sumuhurtham Wedding Ceremony - Sri Guru Achuth & Tejaswini', '2026-11-26T12:00:00', 'SMSO Sabha Kalyana Mandapam, Tiruchanur, Tirupati', 'Sacred Wedding Sumuhurtham in Abhijit Lagnam')" class="w-full bg-white hover:bg-gold/10 text-maroon border border-gold font-cinzel font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition flex items-center justify-center">
+                        <i class="far fa-calendar-plus text-gold mr-2 text-base"></i> Add Sumuhurtham to Calendar (.ics)
+                    </button>
+                    <a href="https://www.google.com/maps/search/?api=1&query=SMSO+Sabha+Kalyana+Mandapam+Tiruchanur+Tirupati" target="_blank" rel="noopener noreferrer" class="w-full gold-bg-gradient text-maroon-dark font-cinzel font-bold py-3 rounded-xl text-xs uppercase tracking-wider shadow text-center hover:brightness-110 transition flex items-center justify-center">
+                        <i class="fas fa-directions mr-2"></i> Google Maps Directions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Guestbook / Wishes Board Section -->
+    <section id="wishes" class="py-20 px-4 max-w-5xl mx-auto">
+        <div class="text-center mb-12">
+            <span class="font-script text-3xl text-gold-dark">Messages & Blessings</span>
+            <h2 class="font-cinzel text-3xl md:text-4xl text-maroon font-bold uppercase tracking-wide my-2">Guest Wishes Board</h2>
+            <div class="w-24 h-1 gold-bg-gradient mx-auto rounded-full"></div>
+        </div>
+        <!-- Post a Wish Box -->
+        <div class="glass-card-cream p-6 rounded-2xl gold-frame mb-10 max-w-2xl mx-auto shadow-lg">
+            <h3 class="font-cinzel text-lg font-bold text-maroon mb-4">Leave Your Heartfelt Wishes</h3>
+            <div class="space-y-4 font-cinzel">
+                <input type="text" id="wishAuthor" placeholder="Your Name" class="w-full px-4 py-2.5 rounded-xl border border-gold/40 text-sm outline-none bg-white">
+                <textarea id="wishText" rows="2" placeholder="May Sri Guru Achuth and Tejaswini be blessed with eternal health and joy..." class="w-full px-4 py-2.5 rounded-xl border border-gold/40 text-sm outline-none bg-white"></textarea>
+                <button onclick="postWish()" class="gold-bg-gradient text-maroon-dark font-cinzel font-bold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow hover:brightness-110 transition">
+                    Post Blessing
+                </button>
+            </div>
+        </div>
+        <!-- Dynamic Wishes Grid -->
+        <div id="wishesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Rendered by JS -->
+        </div>
+    </section>
+    <!-- Ambient Audio Toggle Button & Custom Music Selector -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+        <label for="musicFileInput" class="bg-maroon-dark/90 text-gold text-[10px] font-cinzel px-3 py-1.5 rounded-full border border-gold/40 shadow-xl cursor-pointer hover:bg-maroon transition flex items-center gap-1.5">
+            <i class="fas fa-folder-open text-xs"></i> Select Audio File (.mp3)
+        </label>
+        <input type="file" id="musicFileInput" accept="audio/*" class="hidden" onchange="loadCustomAudio(event)">
+        <button id="audioToggleBtn" onclick="toggleAudio()" class="gold-bg-gradient text-maroon-dark p-4 rounded-full shadow-2xl flex items-center justify-center transition-all transform hover:scale-110 border-2 border-white focus:outline-none group" title="Toggle Traditional Song / Harmonic Music">
+            <i id="audioIcon" class="fas fa-music text-xl"></i>
+            <span class="absolute right-16 bg-maroon-dark text-gold text-xs px-3 py-1.5 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition duration-300 font-cinzel border border-gold/40 shadow-lg">Play Radha Ramanam / Traditional Song</span>
         </button>
-        <div class="hidden sm:block text-xs font-cinzel tracking-wider text-maroon font-semibold">
-            <span id="musicStatusText">Play Wedding Tune</span>
-        </div>
     </div>
-
-    <!-- Floating Petals Container -->
-    <script>
-        for (let i = 0; i < 20; i++) {
-            const petal = document.createElement('div');
-            petal.classList.add('petal');
-            petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.width = (Math.random() * 12 + 8) + 'px';
-            petal.style.height = (Math.random() * 16 + 10) + 'px';
-            petal.style.animationDuration = (Math.random() * 6 + 5) + 's';
-            petal.style.animationDelay = (Math.random() * 5) + 's';
-            document.body.appendChild(petal);
-        }
-    </script>
-
-    <!-- HERO SECTION -->
-    <header class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 py-16 bg-gradient-to-b from-[#6a1b29] via-[#802030] to-[#4a101b] text-white">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:24px_24px]"></div>
-        
-        <div class="relative z-10 max-w-3xl mx-auto space-y-6">
-            <p class="font-cinzel tracking-[0.25em] text-gold text-sm uppercase">With the divine blessings of our families</p>
-            <h1 class="font-vibes text-6xl md:text-8xl text-gold drop-shadow-md">Sri Guru Achuth & Tejaswini</h1>
-            <div class="w-32 h-[2px] bg-gold mx-auto my-4"></div>
-            <p class="font-cinzel text-lg md:text-xl tracking-widest uppercase">Together with their families, invite you to celebrate their wedding</p>
-
-            <!-- Couple Portrait Image from Google Drive -->
-            <div class="my-8 relative group inline-block">
-                <div class="absolute -inset-2 bg-gradient-to-r from-gold via-yellow-200 to-gold rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-                <div class="relative w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-gold shadow-2xl mx-auto">
-                    <img src="IMG_3724.jpeg" alt="Sri Guru Achuth & Tejaswini" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left bg-black/30 backdrop-blur-md p-6 rounded-xl border border-gold/30 mt-6 text-sm md:text-base">
-                <!-- Groom Family -->
-                <div class="space-y-2">
-                    <h3 class="font-cinzel text-gold font-bold text-lg tracking-wider border-b border-gold/40 pb-1">Groom</h3>
-                    <p class="text-xl font-semibold font-cinzel text-white">Sri Guru Achuth</p>
-                    <p class="text-gray-300 text-xs">Son of <span class="text-gold font-medium">Gadicherla Murali Krishna</span> & <span class="text-gold font-medium">Gadicherla Padmaja</span></p>
-                </div>
-                <!-- Bride Family -->
-                <div class="space-y-2">
-                    <h3 class="font-cinzel text-gold font-bold text-lg tracking-wider border-b border-gold/40 pb-1">Bride</h3>
-                    <p class="text-xl font-semibold font-cinzel text-white">Tejaswini</p>
-                    <p class="text-gray-300 text-xs">Daughter of <span class="text-gold font-medium">Prakash B Patil</span> & <span class="text-gold font-medium">P. Manjula</span></p>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- COUNTDOWN TIMER SECTION -->
-    <section class="py-16 bg-[#fffaf0] text-maroon text-center px-4">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="font-cinzel text-3xl md:text-4xl font-bold mb-2">Countdown to Forever</h2>
-            <p class="text-gray-600 mb-8 font-cinzel text-sm tracking-widest">Counting every second until we unite</p>
-            <div id="countdown" class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
-                <div class="bg-white p-4 rounded-xl shadow-md border border-gold/40">
-                    <span id="days" class="font-cinzel text-3xl md:text-4xl font-bold text-maroon block">00</span>
-                    <span class="text-xs uppercase text-gray-500 tracking-wider">Days</span>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-md border border-gold/40">
-                    <span id="hours" class="font-cinzel text-3xl md:text-4xl font-bold text-maroon block">00</span>
-                    <span class="text-xs uppercase text-gray-500 tracking-wider">Hours</span>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-md border border-gold/40">
-                    <span id="minutes" class="font-cinzel text-3xl md:text-4xl font-bold text-maroon block">00</span>
-                    <span class="text-xs uppercase text-gray-500 tracking-wider">Minutes</span>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-md border border-gold/40">
-                    <span id="seconds" class="font-cinzel text-3xl md:text-4xl font-bold text-maroon block">00</span>
-                    <span class="text-xs uppercase text-gray-500 tracking-wider">Seconds</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- EVENTS SECTION -->
-    <section class="py-20 bg-gradient-to-b from-[#fffaf0] to-[#fcf3e8] px-4">
-        <div class="max-w-5xl mx-auto">
-            <div class="text-center mb-16">
-                <p class="font-cinzel text-gold text-sm uppercase tracking-[0.2em]">Mark Your Calendar</p>
-                <h2 class="font-cinzel text-4xl md:text-5xl font-bold text-maroon mt-1">Wedding Ceremonies</h2>
-                <div class="w-24 h-[2px] bg-gold mx-auto mt-4"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <!-- Reception Card -->
-                <div class="bg-white rounded-2xl shadow-xl p-8 border border-gold/40 relative overflow-hidden transform hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
-                    <div class="absolute top-0 right-0 bg-maroon text-gold text-xs px-4 py-1.5 rounded-bl-xl font-cinzel tracking-widest font-bold">Celebration</div>
-                    <div class="space-y-4">
-                        <h3 class="font-cinzel text-2xl font-bold text-maroon">Reception</h3>
-                        <p class="text-gray-600 text-sm">Join us for an evening of joyous celebrations, dinner, and music.</p>
-                        <div class="space-y-2 pt-2 border-t border-gray-100 text-sm">
-                            <p class="flex items-center gap-2 text-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                <span><strong class="font-semibold text-maroon">Date:</strong> 25th November 2026</span>
-                            </p>
-                            <p class="flex items-center gap-2 text-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <span><strong class="font-semibold text-maroon">Time:</strong> 7:30 PM onwards</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="mt-8 pt-4 border-t border-gray-100">
-                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Sri+Guru+Achuth+%26+Tejaswini+Reception&dates=20261125T193000/20261125T230000&details=Wedding+Reception+of+Sri+Guru+Achuth+and+Tejaswini&location=SMSO+Sabha+Kalyana+Mandapam" target="_blank" class="block w-full py-2.5 text-center bg-maroon text-gold font-cinzel rounded-lg font-semibold tracking-wider hover:bg-[#52131e] transition">Add to Calendar</a>
-                    </div>
-                </div>
-
-                <!-- Sumuhurtham Card -->
-                <div class="bg-white rounded-2xl shadow-xl p-8 border border-gold/40 relative overflow-hidden transform hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
-                    <div class="absolute top-0 right-0 bg-maroon text-gold text-xs px-4 py-1.5 rounded-bl-xl font-cinzel tracking-widest font-bold">Sacred Ritual</div>
-                    <div class="space-y-4">
-                        <h3 class="font-cinzel text-2xl font-bold text-maroon">Sumuhurtham</h3>
-                        <p class="text-gray-600 text-sm">Witness our sacred union as we take our vows in Abijith Lagnam.</p>
-                        <div class="space-y-2 pt-2 border-t border-gray-100 text-sm">
-                            <p class="flex items-center gap-2 text-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                <span><strong class="font-semibold text-maroon">Date:</strong> 26th November 2026</span>
-                            </p>
-                            <p class="flex items-center gap-2 text-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <span><strong class="font-semibold text-maroon">Time:</strong> 12:00 PM - 12:15 PM <span class="text-xs bg-gold/20 text-maroon px-2 py-0.5 rounded font-bold">Abijith Lagnam</span></span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="mt-8 pt-4 border-t border-gray-100">
-                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Sri+Guru+Achuth+%26+Tejaswini+Sumuhurtham&dates=20261126T120000/20261126T131500&details=Sumuhurtham+of+Sri+Guru+Achuth+and+Tejaswini+in+Abijith+Lagnam&location=SMSO+Sabha+Kalyana+Mandapam" target="_blank" class="block w-full py-2.5 text-center bg-maroon text-gold font-cinzel rounded-lg font-semibold tracking-wider hover:bg-[#52131e] transition">Add to Calendar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- VENUE SECTION -->
-    <section class="py-16 bg-[#fffaf5] px-4 border-t border-b border-gold/20">
-        <div class="max-w-4xl mx-auto text-center space-y-6">
-            <p class="font-cinzel text-gold text-sm uppercase tracking-[0.2em]">Destination</p>
-            <h2 class="font-cinzel text-3xl md:text-4xl font-bold text-maroon">Wedding Venue</h2>
-            <div class="w-20 h-[2px] bg-gold mx-auto"></div>
-            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gold/30 max-w-xl mx-auto space-y-4">
-                <div class="w-12 h-12 bg-maroon/10 rounded-full flex items-center justify-center mx-auto text-maroon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-maroon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                </div>
-                <h3 class="font-cinzel text-xl font-bold text-maroon">SMSO Sabha Kalyana Mandapam</h3>
-                <p class="text-gray-600 text-sm">We look forward to welcoming you and celebrating together.</p>
-                <a href="https://maps.google.com/?q=SMSO+Sabha+Kalyana+Mandapam" target="_blank" class="inline-block px-6 py-2 bg-gold text-maroon font-cinzel rounded-lg font-semibold tracking-wider hover:bg-yellow-600 transition">Get Directions</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="py-12 bg-maroon text-white text-center px-4">
-        <div class="max-w-2xl mx-auto space-y-4">
-            <h2 class="font-vibes text-4xl text-gold">Sri Guru Achuth & Tejaswini</h2>
-            <p class="font-cinzel text-xs tracking-[0.2em] uppercase text-gray-300">We eagerly await your gracious presence</p>
-            <p class="text-xs text-gray-400 pt-4 border-t border-white/10">© 2026 Sri Guru Achuth & Tejaswini Wedding Celebration</p>
-        </div>
+    <!-- Footer -->
+    <footer class="bg-maroon-deep text-white py-12 text-center px-4 border-t-2 border-gold">
+        <h2 class="font-script text-4xl text-gold mb-2">Sri Guru Achuth & Tejaswini</h2>
+        <p class="font-cinzel text-xs tracking-widest uppercase text-gold-light mb-2">SMSO Sabha Kalyana Mandapam, Tiruchanur, Tirupati</p>
+        <p class="font-cinzel text-xs tracking-widest uppercase text-gold/70 mb-6">November 25 & 26, 2026</p>
+        <div class="w-16 h-0.5 bg-gold/40 mx-auto mb-6"></div>
+        <p class="font-cinzel text-xs text-gray-400">We eagerly await your gracious presence and blessings.</p>
     </footer>
-
-    <!-- SCRIPT FOR MUSIC & COUNTDOWN -->
+    <!-- Toast Notification Popup -->
+    <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-maroon-dark text-gold font-cinzel px-6 py-3 rounded-full border-2 border-gold shadow-2xl text-xs uppercase font-bold tracking-widest toast-enter transition-all duration-300 pointer-events-none">
+        <span id="toastMsg">Notification</span>
+    </div>
+    <!-- Audio Element -->
+    <audio id="weddingAudio" loop preload="auto">
+        <source src="wedding-music.mp3" type="audio/mpeg">
+    </audio>
     <script>
-        // Audio Toggle Script
-        const audio = document.getElementById('weddingMusic');
-        const musicToggleBtn = document.getElementById('musicToggleBtn');
-        const musicStatusText = document.getElementById('musicStatusText');
-        let isPlaying = false;
-
-        function toggleMusic() {
-            if (isPlaying) {
-                audio.pause();
-                isPlaying = false;
-                musicStatusText.textContent = "Play Wedding Tune";
-                musicToggleBtn.classList.remove('bg-gold', 'text-maroon');
-                musicToggleBtn.classList.add('bg-maroon', 'text-gold');
-            } else {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    musicStatusText.textContent = "Pause Tune";
-                    musicToggleBtn.classList.remove('bg-maroon', 'text-gold');
-                    musicToggleBtn.classList.add('bg-gold', 'text-maroon');
-                }).catch(e => {
-                    console.log("Audio playback prevented:", e);
+        // Global Audio State Variables
+        let isAudioPlaying = false;
+        let soundTimer = null;
+        let audioCtx = null;
+        let audioElement = null;
+        // Toast Notification System
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            if (toast && toastMsg) {
+                toastMsg.innerText = message;
+                toast.classList.remove('toast-enter');
+                toast.classList.add('toast-show');
+                setTimeout(() => {
+                    toast.classList.remove('toast-show');
+                    toast.classList.add('toast-enter');
+                }, 3500);
+            }
+        }
+        // Image Fallback Handler for Preview Environments
+        function showFallbackSVG(e) {
+            const img = document.getElementById('coupleImage');
+            if (img && !img.dataset.fallbackLoaded) {
+                img.dataset.fallbackLoaded = "true";
+                img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500"><rect width="100%" height="100%" fill="%233E0A15"/><circle cx="200" cy="180" r="70" fill="%23D4AF37" opacity="0.3"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="%23FFD700" font-family="Cinzel, serif" font-size="20">Sri Guru Achuth &amp; Tejaswini</text><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="%23F3E5AB" font-family="sans-serif" font-size="12">Click "Select Photo File" below to view photo</text></svg>';
+            }
+        }
+        // Custom Local Image Loader
+        function loadCustomImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('coupleImage');
+                    if (img) img.src = e.target.result;
+                    showToast("Photo Loaded Successfully!");
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        // Custom Local Audio Loader
+        function loadCustomAudio(event) {
+            const file = event.target.files[0];
+            if (file && audioElement) {
+                const url = URL.createObjectURL(file);
+                audioElement.src = url;
+                audioElement.play().then(() => {
+                    isAudioPlaying = true;
+                    const icon = document.getElementById('audioIcon');
+                    if (icon) {
+                        icon.classList.remove('fa-music');
+                        icon.classList.add('fa-pause');
+                    }
+                    showToast("Playing Selected Song!");
+                }).catch(err => {
+                    console.log("Audio play error:", err);
                 });
             }
         }
-
-        // Try autoplaying on first user interaction anywhere
-        window.addEventListener('click', function once() {
-            if (!isPlaying) {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    musicStatusText.textContent = "Pause Tune";
-                    musicToggleBtn.classList.remove('bg-maroon', 'text-gold');
-                    musicToggleBtn.classList.add('bg-gold', 'text-maroon');
-                }).catch(e => {});
+        // Audio Toggle Controller
+        function toggleAudio() {
+            if (!audioElement) audioElement = document.getElementById('weddingAudio');
+            const icon = document.getElementById('audioIcon');
+            if (!isAudioPlaying) {
+                const playPromise = audioElement ? audioElement.play() : undefined;
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        isAudioPlaying = true;
+                        if (icon) {
+                            icon.classList.remove('fa-music');
+                            icon.classList.add('fa-pause');
+                        }
+                        showToast("Playing Radha Ramanam Song");
+                    }).catch((err) => {
+                        console.log("Audio file playback fallback to synth:", err);
+                        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                        if (audioCtx.state === 'suspended') audioCtx.resume();
+                        playTraditionalSynth();
+                        isAudioPlaying = true;
+                        if (icon) {
+                            icon.classList.remove('fa-music');
+                            icon.classList.add('fa-pause');
+                        }
+                        showToast("Playing Traditional Melodic Raga");
+                    });
+                }
+            } else {
+                if (audioElement) audioElement.pause();
+                stopTraditionalSynth();
+                isAudioPlaying = false;
+                if (icon) {
+                    icon.classList.remove('fa-pause');
+                    icon.classList.add('fa-music');
+                }
+                showToast("Music Paused");
             }
-            window.removeEventListener('click', once);
-        }, { once: true });
-
-        // Countdown Timer Script
-        const weddingDate = new Date("November 25, 2026 19:30:00").getTime();
-
-        function updateCountdown() {
+        }
+        function playTraditionalSynth() {
+            const ragaNotes = [277.18, 311.13, 349.23, 415.30, 466.16, 554.37];
+            soundTimer = setInterval(() => {
+                if (!isAudioPlaying || !audioCtx) return;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                const freq = ragaNotes[Math.floor(Math.random() * ragaNotes.length)];
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.3);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.5);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 2.5);
+            }, 1000);
+        }
+        function stopTraditionalSynth() {
+            if (soundTimer) clearInterval(soundTimer);
+        }
+        // Real-time Dual Countdowns
+        const receptionTime = new Date('2026-11-25T19:30:00+05:30').getTime();
+        const muhurthamTime = new Date('2026-11-26T12:00:00+05:30').getTime();
+        function updateCountdowns() {
             const now = new Date().getTime();
-            const distance = weddingDate - now;
-
-            if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "<p class='col-span-4 text-center font-cinzel text-xl text-maroon font-bold'>The Wedding Celebration has begun!</p>";
+            // Reception
+            const diffRec = receptionTime - now;
+            if (diffRec > 0) {
+                document.getElementById('rec-days').innerText = String(Math.floor(diffRec / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                document.getElementById('rec-hours').innerText = String(Math.floor((diffRec % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                document.getElementById('rec-mins').innerText = String(Math.floor((diffRec % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                document.getElementById('rec-secs').innerText = String(Math.floor((diffRec % (1000 * 60)) / 1000)).padStart(2, '0');
+            } else {
+                document.getElementById('rec-days').innerText = '00';
+                document.getElementById('rec-hours').innerText = '00';
+                document.getElementById('rec-mins').innerText = '00';
+                document.getElementById('rec-secs').innerText = '00';
+            }
+            // Sumuhurtham
+            const diffMuh = muhurthamTime - now;
+            if (diffMuh > 0) {
+                document.getElementById('muh-days').innerText = String(Math.floor(diffMuh / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                document.getElementById('muh-hours').innerText = String(Math.floor((diffMuh % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                document.getElementById('muh-mins').innerText = String(Math.floor((diffMuh % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                document.getElementById('muh-secs').innerText = String(Math.floor((diffMuh % (1000 * 60)) / 1000)).padStart(2, '0');
+            } else {
+                document.getElementById('muh-days').innerText = '00';
+                document.getElementById('muh-hours').innerText = '00';
+                document.getElementById('muh-mins').innerText = '00';
+                document.getElementById('muh-secs').innerText = '00';
+            }
+        }
+        // Generate .ICS Calendar File
+        function generateICS(title, startTime, location, description) {
+            const start = startTime.replace(/-|:/g, '');
+            const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Wedding Invite//EN\nBEGIN:VEVENT\nSUMMARY:${title}\nDTSTART:${start}\nLOCATION:${location}\nDESCRIPTION:${description}\nEND:VEVENT\nEND:VCALENDAR`;
+            
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute('download', `${title.replace(/\s+/g, '_')}.ics`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("Calendar Event Saved!");
+        }
+        // Dynamic Wishes Board
+        const defaultWishes = [
+            { author: "Suresh & Family", text: "Wishing Sri Guru Achuth & Tejaswini a lifetime of togetherness, happiness, and divine blessings!" },
+            { author: "Ananya Sharma", text: "Heartiest congratulations to the wonderful couple! May your journey be filled with love and laughter." }
+        ];
+        function getStoredWishes() {
+            const stored = localStorage.getItem('wedding_wishes_achuth_tejaswini');
+            return stored ? JSON.parse(stored) : defaultWishes;
+        }
+        function renderWishes() {
+            const container = document.getElementById('wishesGrid');
+            if (!container) return;
+            const wishes = getStoredWishes();
+            container.innerHTML = wishes.map(w => `
+                <div class="glass-card-cream p-6 rounded-2xl gold-frame shadow-md hover:shadow-xl transition">
+                    <p class="font-cinzel text-sm text-gray-700 italic mb-4">"${w.text}"</p>
+                    <div class="flex items-center space-x-2 text-maroon font-cinzel font-bold text-xs">
+                        <i class="fas fa-heart text-gold"></i>
+                        <span>${w.author}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        function postWish() {
+            const authorInput = document.getElementById('wishAuthor');
+            const textInput = document.getElementById('wishText');
+            
+            if (!authorInput || !textInput) return;
+            const author = authorInput.value.trim();
+            const text = textInput.value.trim();
+            if (!author || !text) {
+                showToast("Please enter both your name and wish!");
                 return;
             }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60 * 1000)) / 1000);
-
-            document.getElementById("days").innerText = String(days).padStart(2, '0');
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+            const wishes = getStoredWishes();
+            wishes.unshift({ author, text });
+            localStorage.setItem('wedding_wishes_achuth_tejaswini', JSON.stringify(wishes));
+            
+            authorInput.value = '';
+            textInput.value = '';
+            renderWishes();
+            showToast("Thank you for your warm blessing!");
         }
-
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        // Canvas Falling Petals Animation
+        const canvas = document.getElementById('petalCanvas');
+        const ctx = canvas ? canvas.getContext('2d') : null;
+        let petals = [];
+        function resizeCanvas() {
+            if (!canvas || !canvas.parentElement) return;
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        class Petal {
+            constructor() {
+                this.x = Math.random() * (canvas ? canvas.width : 500);
+                this.y = Math.random() * (canvas ? canvas.height : 500) - (canvas ? canvas.height : 500);
+                this.size = Math.random() * 8 + 6;
+                this.speedY = Math.random() * 1.5 + 0.8;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.angle = Math.random() * 360;
+                this.spin = Math.random() * 2 - 1;
+            }
+            update() {
+                if (!canvas) return;
+                this.y += this.speedY;
+                this.x += Math.sin(this.y * 0.01) + this.speedX;
+                this.angle += this.spin;
+                if (this.y > canvas.height) {
+                    this.y = -20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                if (!ctx) return;
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.angle * Math.PI) / 180);
+                ctx.fillStyle = '#D4AF37';
+                ctx.globalAlpha = 0.5;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+        if (canvas) {
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            for (let i = 0; i < 35; i++) {
+                petals.push(new Petal());
+            }
+        }
+        function animatePetals() {
+            if (ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                petals.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+            }
+            requestAnimationFrame(animatePetals);
+        }
+        // On DOM Loaded
+        window.addEventListener('DOMContentLoaded', () => {
+            audioElement = document.getElementById('weddingAudio');
+            renderWishes();
+            updateCountdowns();
+            setInterval(updateCountdowns, 1000);
+            animatePetals();
+        });
     </script>
 </body>
 </html>

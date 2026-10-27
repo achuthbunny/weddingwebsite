@@ -588,9 +588,8 @@
         }
         // Dynamic Wishes Board
         const defaultWishes = [
-            { author: "Friends", text: "Wishing Sri Guru Achuth & Tejaswini a lifetime of togetherness, happiness, and divine blessings!" },
-            { author: "Families", text: "Heartiest congratulations to the wonderful couple! May your journey be filled with love and laughter." }
-        ];
+        
+        ]; 
         function getStoredWishes() {
             const stored = localStorage.getItem('wedding_wishes_achuth_tejaswini');
             return stored ? JSON.parse(stored) : defaultWishes;
@@ -695,6 +694,30 @@
             updateCountdowns();
             setInterval(updateCountdowns, 1000);
             animatePetals();
+        if (audioElement) {
+                audioElement.volume = 0.5;
+
+                audioElement.play()
+                    .then(() => {
+                        isAudioPlaying = true;
+
+                        const icon = document.getElementById('audioIcon');
+                        if (icon) {
+                            icon.classList.remove('fa-music');
+                            icon.classList.add('fa-pause');
+                        }
+
+                        console.log('Wedding music started automatically.');
+                    })
+                    .catch((error) => {
+                        console.log(
+                            'Autoplay blocked. Visitor interaction is required.',
+                            error
+                        );
+
+                        showToast('Tap the music button to play the song');
+                    });
+            }
         });
     </script>
 </body>
